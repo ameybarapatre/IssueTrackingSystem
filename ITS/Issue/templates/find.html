@@ -1,0 +1,186 @@
+<!doctype html> <!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+
+
+    <title>WT</title>
+
+<link href="//cdn.muicss.com/mui-0.2.1/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <!-- uikit -->
+    <link rel="stylesheet" href="/static/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="/static/assets/icons/flags/flags.min.css" media="all">
+
+    <!-- altair admin -->
+    <link rel="stylesheet" href="/static/assets/css/main.min.css" media="all">
+
+    
+</head>
+<body class="sidebar_main_close sidebar_main_swipe">
+    <!-- main header -->
+    <header id="header_main">
+        <div class="header_main_content">
+            <nav class="uk-navbar">
+                <!-- main sidebar switch -->
+                
+                <div id="menu_top" class="uk-float-left uk-hidden-small">
+                 
+
+                </div>
+                <div class="uk-navbar-flip">
+
+                    <ul class="uk-navbar-nav user_actions">
+                        <li><a href="#" class="user_action_image uk-text-large "><b>{{username}}</b></a></li>
+                                              <li data-uk-dropdown="{mode:'click'}">
+                            
+                            <a href="#" class="user_action_image"><img class="md-user-image" src="/static/assets/img/avatars/user.png" alt=""/></a>
+                            <div class="uk-dropdown uk-dropdown-small uk-dropdown-flip">
+                                <ul class="uk-nav js-uk-prevent">
+                                    
+                                    <li><a href="/Issue/logout/">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="header_main_search_form">
+            <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
+            <form class="uk-form">
+                <input type="text" class="header_main_search_input" />
+                <button class="header_main_search_btn uk-button-link"><i class="md-icon material-icons">&#xE8B6;</i></button>
+            </form>
+        </div>
+    </header><!-- main header end -->
+
+    <!-- main sidebar -->
+    
+    <div id="page_content">
+        <div id="page_content_inner">
+                   <div class="md-card">
+
+                <form class="md-card-content" id="issue_submit" action="/Issue/submit/" method="POST">
+                    {% csrf_token %}
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-4-11">
+                            <label for="propage_chat.htmlct_search_name">Issue</label>
+                            <input type="text" class="md-input" id="product_search_name" name="issue">
+                        </div>
+    
+                        <div class="uk-width-medium-2-10">
+                            <div class="uk-margin-small-top">
+                                <select id="product_search_status" data-md-selectize multiple data-md-selectize-bottom placeholder="Type" name="type" form="issue_submit">
+                                    
+                                    <option value="Food">Food</option>
+                                    <option value="House Keeping">House Keeping</option>
+                                    <option value="Electrical">Electrical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-10">
+                            <div class="uk-margin-top uk-text-nowrap">
+                                <input type="checkbox" name="product_search_active" id="product_search_active" name="Immediate" data-md-icheck/>
+                                <label for="product_search_active" class="inline-label">Immediate Attention Required</label>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-3-10 uk-text-center">
+                           <input type="submit" class="md-btn md-btn-primary uk-margin-small-top" value ="Submit"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% for each in Issues %}
+            <br/>
+            <div class="md-card">
+                  <h4 class="heading_a uk-margin-bottom" style="padding-top:8px;padding-bottom:-5px">&nbsp;&nbsp;&nbsp;Issue No {{each.id}}</h4>
+                            
+                <form class="md-card-content" action="/Issue/remove/" method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-5-10"><input type="hidden" value="{{each.id}}" name="id" readonly>
+
+                            <label for="product_search_name">Details</label><br/><br/>
+                             <label for="product_search_name">{{each.issue}}</label>
+                          
+                        </div>
+                        <div class="uk-width-medium-2-10">
+                            <label for="product_search_price">Type</label>
+                            <br/><br/>
+                             <label for="product_search_name">{{each.type_issue}}</label>  
+                        </div>
+                       
+                        <div class="uk-width-medium-1-10">
+                            
+                            
+                            <label for="product_search_active" class="inline-label">Date</label>
+                            <br/><br/>
+                             <label for="product_search_name">{{each.issue_open_date}}</label>
+                          
+                        </div>
+                        <div class="uk-width-medium-2-10 uk-text-center">
+                            <input type="submit" href="#" class="md-btn md-btn-primary uk-margin-small-top" value="Resolved"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <br/>
+            
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <!-- common functions -->
+    <script src="/static/assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="/static/assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="/static/assets/js/altair_admin_common.min.js"></script>
+
+
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+        });
+    </script>
+
+    
+</body>
+
+</html>
